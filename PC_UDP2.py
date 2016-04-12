@@ -10,7 +10,7 @@ except:
    import pickle
 
 # Setup Variables & Socket
-IP = '192.168.0.100'
+IP = '192.168.0.122'
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind((IP, 5000))
 print ("Ready")
