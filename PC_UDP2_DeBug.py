@@ -17,6 +17,14 @@ print ("Ready")
 servoMin = 150  # Min pulse length out of 4096
 servoMax = 600  # Max pulse length out of 4096
 
+#Error Variables
+Error_1 = "Servo 0 Problem"
+Error_2 = "Servo 1 Problem"
+Error_3 = "Servo 2 Problem"
+Error_4 = "Servo 3 Problem"
+Error_5 = "Servo 4 Problem"
+Error_6 = "Recv Problem"
+
 # Initialise the PWM device using the default address
 pwm = PWM(0x40)
 # Note if you'd like more debug output you can instead run:
@@ -24,7 +32,10 @@ pwm = PWM(0x40)
 pwm.setPWMFreq(60) # Set the Frequency to 60hz
 
 while True:
-   raw_message,data = s.recvfrom(1024)
+   try:
+      raw_message,data = s.recvfrom(1024)
+   except:
+      print(Error_6)
    (data_x, data_y, data_s, data_z, JoyButton_0, JoyButton_1, JoyButton_2) = pickle.loads(raw_message)
    if JoyButton_0 == 1:
       print("heelo")
@@ -41,16 +52,28 @@ while True:
 
    if 150 <= Aileron_Servo <= 600:
       Servo0 = Alieron_Servo
-      pwm.setPWM(0, 0, Servo0)
-   #if 150 <= Elevator_Servo <= 600:
-   #   Servo1 = Elevator_Servo
-   #   pwm.setPWM(1, 0, Elevator_Servo)
-   #if 150 <= Throttle_Servo <= 600:
-   #   Servo2 = Throttle_Servo
-   #   pwm.setPWM(2, 0, Throttle_Servo)
-   #if 150 <= Rudder_Servo <= 600:
-   #   Servo3 = Rudder_Servo
-   #   pwm.setPWM(3, 0, Rudder_Servo)
+      try:
+         pwm.setPWM(0, 0, Servo0)
+      except:
+         print(Error_1)
+   if 150 <= Elevator_Servo <= 600:
+      Servo1 = Elevator_Servo
+      try:
+         pwm.setPWM(1, 0, Elevator_Servo)
+      except:
+         print(Error_2)
+   if 150 <= Throttle_Servo <= 600:
+      Servo2 = Throttle_Servo
+      try:
+         pwm.setPWM(2, 0, Throttle_Servo)
+      except:
+         print(Error_4)
+   if 150 <= Rudder_Servo <= 600:
+      Servo3 = Rudder_Servo
+      try:
+         pwm.setPWM(3, 0, Rudder_Servo)
+      except:
+         print(Error_5)
       
 
 
